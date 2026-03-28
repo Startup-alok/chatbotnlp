@@ -1,0 +1,162 @@
+# Chatbot-NLP Project Blackbook
+
+## Title Page
+**Project Title:** Chatbot-NLP: College Information Chatbot with Natural Language Processing
+**Author:** [Your Name]
+**Date:** [Current Date]
+**Version:** 1.0.0
+**Description:** A Node.js-based chatbot application designed to provide information about a college using natural language processing, rule-based responses, and a web interface.
+
+---
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Technology Stack](#technology-stack)
+4. [Project Structure](#project-structure)
+5. [Installation and Setup](#installation-and-setup)
+6. [Usage](#usage)
+7. [API Endpoints](#api-endpoints)
+8. [NLP and Logic Explanation](#nlp-and-logic-explanation)
+9. [Frontend Details](#frontend-details)
+10. [Challenges and Solutions](#challenges-and-solutions)
+11. [Future Enhancements](#future-enhancements)
+12. [Conclusion](#conclusion)
+
+---
+
+## Overview
+This project is a college information chatbot built with Node.js and Express.js. It uses TensorFlow.js and the Universal Sentence Encoder for semantic intent detection, combined with rule-based shortcuts for common queries. The chatbot handles queries in English and Hinglish (Hindi-English mix), providing responses on topics like admissions, fees, courses, hostel, facilities, placements, library timings, and college schedules.
+
+The application includes a web frontend with multiple pages (Home, About, Courses, Contact) and a chat interface for interacting with the bot. It features conversation memory, spell correction, and structured data responses for better user experience.
+
+---
+
+## Features
+- **Natural Language Processing (NLP):** Semantic intent detection using TensorFlow Universal Sentence Encoder for fallback when rule-based matching fails.
+- **Rule-Based Responses:** Fast, keyword-based matching for common queries (e.g., "hostel", "fees").
+- **Hinglish Support:** Normalization of Hinglish phrases (e.g., "kitna" to "how much").
+- **Spell Correction:** Uses Levenshtein distance to correct typos in user input.
+- **Conversation Memory:** Remembers last few interactions for context-aware responses.
+- **Structured Data:** Provides JSON-structured responses for hostel details (boys/girls).
+- **Web Interface:** Static HTML pages served via Express, with JavaScript for chat functionality.
+- **CORS Enabled:** Allows cross-origin requests for API access.
+- **Gender-Specific Hostel Info:** Differentiates responses for boys' and girls' hostels.
+- **Context-Aware Follow-ups:** E.g., after admission query, suggests hostel info.
+
+---
+
+## Technology Stack
+- **Backend:** Node.js, Express.js
+- **NLP:** TensorFlow.js, @tensorflow-models/universal-sentence-encoder
+- **Utilities:** fast-levenshtein (spell correction), natural (NLP library, though minimally used)
+- **Middleware:** CORS, express.json(), express.static()
+- **Frontend:** HTML, CSS, JavaScript (vanilla)
+- **Package Manager:** npm
+- **Development:** Nodemon for hot reloading
+
+Dependencies (from package.json):
+- express: ^5.1.0
+- @tensorflow-models/universal-sentence-encoder: ^1.3.3
+- @tensorflow/tfjs: ^4.22.0
+- cors: ^2.8.5
+- fast-levenshtein: ^3.0.0
+- natural: ^8.1.0
+
+---
+
+## Project Structure
+```
+d:/chatbot-nlp/
+├── app.js                 # Main server file with NLP logic and API endpoints
+├── package.json           # Project metadata and dependencies
+├── package-lock.json      # Lockfile for dependencies
+├── TODO.md                # Task list (if any)
+└── public/                # Static frontend files
+    ├── index.html         # Main landing page
+    ├── home.html          # Home page
+    ├── about.html         # About page
+    ├── courses.html       # Courses page
+    ├── contact.html       # Contact page
+    ├── script.js          # Client-side JavaScript for chat
+    └── style.css          # Stylesheet
+```
+
+---
+
+## Installation and Setup
+1. **Prerequisites:** Node.js (v14+), npm installed.
+2. **Clone/Download:** Place the project in `d:/chatbot-nlp`.
+3. **Install Dependencies:** Run `npm install` in the project root.
+4. **Start Server:**
+   - Production: `npm start` (runs `node app.js`)
+   - Development: `npm run dev` (uses nodemon for auto-restart)
+5. **Access:** Open `http://localhost:5000` in browser. Server binds to `0.0.0.0:5000` for external access.
+
+---
+
+## Usage
+- **Web Interface:** Navigate to the served pages. Use the chat interface on `index.html` or other pages to ask questions like "What are the courses?" or "Hostel for girls?".
+- **API Direct:** Send POST requests to `/ask` with JSON body `{"question": "your query"}`.
+- **Examples:**
+  - Input: "admission kaise kare" → Normalized to "admission how to do" → Response: Admission process details.
+  - Input: "hostel for boys" → Structured response with boys' hostel data.
+- **Supported Queries:** Admissions, fees, courses, hostel (boys/girls), facilities, placements, library, timings, greetings.
+
+---
+
+## API Endpoints
+- **POST /ask:** Main chatbot endpoint.
+  - Request: `{"question": "string"}`
+  - Response: `{ "reply": "string", "structured": {...}, "source": "rule/nlp", ... }`
+  - Handles normalization, spell correction, rule matching, NLP fallback.
+
+Static files served from `/public` (e.g., GET /index.html).
+
+---
+
+## NLP and Logic Explanation
+- **Intent Data:** Predefined intents with example phrases (e.g., admission: ["how to apply", "admission process"]).
+- **Normalization:** Maps Hinglish to English (e.g., "kya" → "what").
+- **Spell Correction:** Corrects words against intent keywords using Levenshtein distance (threshold: 2).
+- **Rule-Based Matching:** Keyword checks for fast responses (e.g., if "hostel" in input, return hostel info).
+- **NLP Fallback:** Embeds user input and compares to intent centroids using cosine similarity (threshold: 0.60).
+- **Memory:** Stores last 6 messages for context.
+- **Centroids:** Computed at startup by averaging embeddings of intent examples.
+
+---
+
+## Frontend Details
+- **Pages:** index.html (chat), home.html, about.html, courses.html, contact.html.
+- **Script.js:** Handles chat UI, sends POST to /ask, displays responses.
+- **Style.css:** Basic styling for pages and chat box.
+- **Integration:** Chat available on all pages via script.js.
+
+---
+
+## Challenges and Solutions
+- **Challenge:** Handling Hinglish and typos.
+  - **Solution:** Normalization map and Levenshtein correction.
+- **Challenge:** Semantic matching without full ML training.
+  - **Solution:** Universal Sentence Encoder for embeddings and centroids.
+- **Challenge:** Context in conversations.
+  - **Solution:** Conversation memory array.
+- **Challenge:** Structured data for hostels.
+  - **Solution:** JSON objects for boys/girls hostels.
+
+---
+
+## Future Enhancements
+- Add more intents (e.g., faculty, events).
+- Integrate database for dynamic data.
+- Voice input/output.
+- Multi-language support beyond Hinglish.
+- User authentication and personalized responses.
+- Analytics on queries.
+
+---
+
+## Conclusion
+This project demonstrates a robust chatbot using modern NLP techniques combined with rule-based logic. It's scalable, user-friendly, and suitable for college information systems. Total lines of code: ~400 in app.js, plus frontend files.
+
+For any queries, contact [Your Contact Info].

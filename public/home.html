@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Website - Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <h1 class="nav-logo">🎓 Our College</h1>
+      <ul class="nav-menu">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.html">Chatbot</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <h2>Welcome to Our College</h2>
+      <p>Empowering students with quality education and modern facilities.</p>
+    </section>
+
+    <section class="info-section">
+      <h3>Admissions</h3>
+      <p>Admissions usually start between May–June (after 12th board results) and close by July–August.</p>
+    </section>
+
+    <section class="info-section">
+      <h3>Fees</h3>
+      <p>The fees range from ₹22,000 to ₹78,000 depending on the course.</p>
+    </section>
+
+    <section class="info-section">
+      <h3>Courses</h3>
+      <p>We offer a variety of programs including UG, PG, Diploma, and PhD courses.</p>
+    </section>
+
+    <section class="info-section">
+      <h3>Facilities</h3>
+      <p>Our facilities include a library, labs, sports grounds, auditorium, cafeteria, and a medical room.</p>
+    </section>
+
+    <section class="info-section">
+      <h3>Hostel</h3>
+      <p>Yes — we have separate hostels for boys and girls with modern amenities.</p>
+    </section>
+
+    <section class="info-section">
+      <h3>Placement</h3>
+      <p>Average placement ranges from 4–6 LPA. Companies like TCS, Infosys, Wipro, Tech Mahindra visit regularly.</p>
+    </section>
+  </main>
+
+  <!-- Embedded Chatbot Widget -->
+  <div id="chat-widget" class="chat-widget">
+    <div class="chat-toggle" id="chat-toggle">💬 Chat</div>
+    <div class="chat-container-widget" id="chat-container-widget">
+      <div class="chat-header-widget">🎓 Campus Assistant</div>
+      <div id="chat-box-widget" class="chat-box-widget"></div>
+      <div class="chips-container-widget" id="chips-container-widget"></div>
+      <div class="chat-input-widget">
+        <input type="text" id="user-input-widget" placeholder="Type your question..." autocomplete="off" />
+        <button id="send-btn-widget">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
